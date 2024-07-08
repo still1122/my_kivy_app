@@ -1,0 +1,59 @@
+name: Build iOS App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Install kivy-ios
+      run: |
+        git clone https://github.com/kivy/kivy-ios
+        cd kivy-ios
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        toolchain build kivy
+
+    - name: Build the app
+      run: |
+        cd kivy-ios
+        toolchain create myapp ../
+        toolchain build myapp
+        toolchain xcode myapp
+
+    - name: Archive the app
+      run: |
+        cd myapp-ios
+        xcodebuild -scheme myapp archive -archivePath $PWD/build/myapp.xcarchive
+
+    - name: Export the IPA
+      run: |
+        xcodebuild -exportArchive -archivePath $PWD/build/myapp.xcarchive -exportPath $PWD/build -exportOptionsPlist ExportOptions.plist
+
+    - name: Upload IPA
+      uses: actions/upload-artifact@v2
+      with:
+        name: myapp
+        path: myapp-ios/build/*.ipa

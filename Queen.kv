@@ -1,0 +1,301 @@
+#:import Factory kivy.factory.Factory
+MyScreenManager:
+    id: yo
+    FirstScreen:
+        name: 'main'
+    SecondScreen:
+        name: 'workdone'
+
+
+<FirstScreen@Screen>:
+    Bx1:
+<SecondScreen@Screen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20,10,10,20
+        canvas.before:
+            Color:
+                rgba: 1, 0.5, 0.5, 0.8  # Pink color (R, G, B, A)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        
+        # BoxLayout for labels at the top, taking 30% of the screen height
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 0.2
+            padding: 0
+            
+            BoxLayout:
+                orientation: "horizontal"   
+                size_hint_y: None
+                height: "40dp"
+                Label:
+                    text: "Name"
+                    size_hint_x: 0.35
+                    pos_hint: {"left":0, "center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                Label:
+                    id: nname5
+                    text: root.nname
+                    size_hint_x: 0.65
+                    pos_hint: {"center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                    
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "40dp"
+                Label:
+                    text: "Age"
+                    size_hint_x: 0.35
+                    pos_hint: {"left":0, "center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                Label:
+                    text: root.nnage
+                    size_hint_x: 0.65
+                    pos_hint: {"center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "40dp"
+                Label:
+                    text: "Diagnostic"
+                    size_hint_x: 0.35
+                    pos_hint: {"left":0, "center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                Label:
+                    text: root.nnd
+                    size_hint_x: 0.65
+                    pos_hint: {"center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                    
+        
+        # BoxLayout for inputs at the bottom, taking the rest of the screen height (70%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 0.8
+            
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: 0.5
+                Label:
+                    text: "Informations-diagnostic"
+                    size_hint_y: None
+                    height: "30dp"
+                    pos_hint: {"center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                TextInput:
+                    id: diagnostic_info1
+                    text: root.wki
+                    size_hint_y: 1
+                    color: 1, 0.5, 0.5, 1
+                    font_size: '14sp'
+                    text_size: self.size
+                    
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: 0.5
+                Label:
+                    text: "Analyse de la seance"
+                    size_hint_y: None
+                    height: "30dp"
+                    pos_hint: {"center_y": 0.5}
+                    halign: "left"
+                    text_size: self.size
+                TextInput:
+                    id: session_analysis
+                    text: root.wka
+                    size_hint_y: 1
+                    color: 1, 0.5, 0.5, 1
+                    font_size: '14sp'
+                    text_size: self.size
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: 0.1
+            Button:
+                text:"SAVE"
+                size_hint: .35, .1
+                pos_hint: {"center_x": 0.5,"top": 0.5}
+                color: 1, 0.5, 0.5, 1
+                on_touch_up:root.loadwi()
+                padding: 5
+            Button:
+                text:"Info"
+                size_hint: .35, .1
+                pos_hint: {"center_x": 0.5,"top": 0.5}
+                color: 1, 0.5, 0.5, 1
+                on_touch_up:root.load3() 
+                padding: 5
+<Bx1>:
+    orientation: "vertical"
+    padding: 20, 20, 10, 10
+    canvas.before:
+        Color:
+            rgba: 1, 0.5, 0.5, 0.8  # Pink color (R, G, B, A)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "Apointment"
+        size_hint: .45, 0.2
+        pos_hint: {"center_x": 0.5, "top": 1}
+        font_size: dp(30)    
+    
+    Bx2:
+    Button:
+        text: "ADD"
+        size_hint: .35, .1
+        pos_hint: {"center_x": 0.5}
+        color: 1, 0.5, 0.5, 1
+        on_touch_up: Factory.infopopup().open()
+
+
+<Bx2>:
+    orientation: 'vertical'
+    ScrollView:
+        BoxLayout:
+            id: scroll_layout
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 0, 0, 10, 10
+            
+            
+    Button:
+        text: "VIEW LIST"
+        size_hint: .35, .1
+        pos_hint: {"center_x": 0.5}
+        color: 1, 0.5, 0.5, 1
+        on_touch_up: root.get_info()
+                          
+<Bx3>:
+    orientation: "vertical"
+    padding: 20, 10, 10, 10
+    canvas.before:
+        Color:
+            rgba: 1, 0.5, 0.5, 0.8  # Pink color (R, G, B, A)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+       
+    BoxLayout:
+        orientation: "horizontal"
+        Label:
+            text: "Name"
+            size_hint: .35, .5
+            pos_hint: {"center_y": 0.9}
+            #color: 1, 0.5, 0.5, 1
+            text_size: self.size
+            halign: "left"
+        TextInput:
+            id: name_input
+            size_hint: .65, .5
+            pos_hint: {"top": 1}
+            color: 1, 0.5, 0.5, 1
+            font_size:'14sp'
+            padding: 6, self.height / 2 - self.line_height / 2, 6, 6
+    BoxLayout:
+        orientation: "horizontal"
+        Label:
+            text: "Age"
+            size_hint: .35, .5
+            pos_hint: {"center_y": 0.9}
+            #color: 1, 0.5, 0.5, 1
+            text_size: self.size
+            halign: "left"
+            
+        TextInput:
+            id: age_input
+            size_hint: .65, .5
+            pos_hint: {"top": 1}
+            color: 1, 0.5, 0.5, 1
+            font_size:'14sp'
+            padding: 6, self.height / 2 - self.line_height / 2, 6, 6
+    BoxLayout:
+        orientation: "horizontal"
+        Label:
+            text: "Diagnostic"
+            size_hint: .35, .5
+            pos_hint: {"center_y": 0.9}
+            #color: 1, 0.5, 0.5, 1
+            text_size: self.size
+            halign: "left"
+            
+        TextInput:
+            id: diagnostic_input
+            size_hint: .65, .5
+            pos_hint: {"top": 1}
+            color: 1, 0.5, 0.5, 1
+            font_size:'12sp'
+            padding: 6, self.height / 2 - self.line_height / 2, 6, 6
+    BoxLayout:
+        orientation: "horizontal"
+        Label:
+            text: "Date"
+            size_hint: .471, .5
+            pos_hint: {"center_y": 0.9}
+            #color: 1, 0.5, 0.5, 1
+            text_size: self.size
+            halign: "left"
+        TextInput:
+            id: date_picked
+            text: app.ddate
+            size_hint: .5, .5
+            pos_hint: {"top": 1}
+            color: 1, 0.5, 0.5, 1
+            font_size:'14sp'
+            padding: 6, self.height / 2 - self.line_height / 2, 6, 6
+        MDRaisedButton:
+            text: "_"
+            size_hint: .1, .5
+            pos_hint: {"top": 1}
+            on_touch_up: app.show_date_picker()
+    BoxLayout:
+        orientation: "horizontal"
+        Label:
+            text: "Time"
+            size_hint: .471, .5
+            pos_hint: {"center_y": 0.9}
+            #color: 1, 0.5, 0.5, 1
+            text_size: self.size
+            halign: "left"
+        TextInput:
+            id: time_picked
+            text: app.ttime
+            size_hint: .5, .5
+            pos_hint: {"top": 1}
+            color: 1, 0.5, 0.5, 1
+            font_size:'14sp'
+            padding: 6, self.height / 2 - self.line_height / 2, 6, 6
+        MDRaisedButton:
+            text: "_"
+            size_hint: .1, .5
+            pos_hint: {"top": 1}
+            on_touch_up: app.show_time_picker()
+    Button:
+        id: sb
+        text:root.sbtext
+        size_hint: .4, 0.5
+        pos_hint: {"center_x": 0.5}
+        color: 1, 0.5, 0.5, 1
+        padding: 10, 10, 10, 10
+        on_touch_up: 
+            root.save()
+            
+<infopopup@Popup>:
+    id: patients_form
+    title: 'Add patient info'
+    size_hint: None, None
+    size: dp(300), dp(500)
+    Bx3:
+
+        
